@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid
+        android:color="?attr/colorPrimaryVariant"
+        android:theme="@style/Theme.VkCup2021" />
+    <corners android:radius="@dimen/large_button_corner_radius" />
+</shape>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="action_button_size">68dp</dimen>
+    <dimen name="action_button_size_focused">88dp</dimen>
+    <dimen name="action_button_icon_size">24dp</dimen>
+
+    <!-- Card -->
+    <dimen name="card_corner_radius">24dp</dimen>
+    <dimen name="avatar_size">36dp</dimen>
+    <dimen name="avatar_corner_radius">18dp</dimen>
+    <dimen name="margin_top_content">16dp</dimen>
+    <dimen name="margin_bottom_content">28dp</dimen>
+    <dimen name="margin_buttons_row">36dp</dimen>
+    <dimen name="overlay_message_top_margin">68dp</dimen>
+
+    <dimen name="large_button_corner_radius">12dp</dimen>
+</resources>
