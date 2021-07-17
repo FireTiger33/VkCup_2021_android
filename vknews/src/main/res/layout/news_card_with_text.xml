@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="@dimen/card_corner_radius">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@drawable/overlay_blue">
+
+        <include layout="@layout/news_info" />
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/NewsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/social_actions"
+            android:layout_marginHorizontal="@dimen/margin_bottom_content"
+            android:layout_marginTop="@dimen/margin_bottom_content"
+            tools:text="«В жарких районах типа Персидского залива летом температура в некоторых его помещениях может доходить до +70 °C. Постоянная возня с механизмами, руки, пропахшие маслом и мазутом. Не такую картину рисуют себе молодые люди, мечтающие о море.
+А представляют они себя с кружкой кофе в одной руке, с биноклем в другой, придерживающими тяжелый штурвал своей могучей капитанской грудью в белоснежной рубашке с погонами или в кителе, с капитанской фуражкой на голове..." />
+
+        <include
+            android:id="@+id/social_actions"
+            layout="@layout/social_actions_buttons_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_bottom_content" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/news_left_overlay" />
+
+    <include layout="@layout/news_right_overlay" />
+
+</androidx.cardview.widget.CardView>

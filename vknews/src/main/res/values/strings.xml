@@ -1,8 +1,14 @@
 <resources>
     <string name="title">Новости</string>
     <integer name="com_vk_sdk_AppId">7903849</integer>
-    <string name="dislike">Дизлайк</string>
-    <string name="like">Лайк</string>
+
     <string name="more_entries">Больше таких записей</string>
     <string name="fewer_entries">Меньше таких записей</string>
+    <string name="login">Войти</string>
+
+    <!-- Content descriptions -->
+    <string name="like">Лайк</string>
+    <string name="dislike">Дизлайк</string>
+    <string name="show_test_content">Показать тестовый контент</string>
+    <string name="attachment_image">Прикреплённое изображение</string>
 </resources>

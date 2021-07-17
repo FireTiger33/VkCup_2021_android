@@ -6,101 +6,51 @@
     android:layout_height="match_parent"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
-    <RelativeLayout
-        android:id="@+id/image_background_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:background="@drawable/overlay_blue">
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/avatar_size"
-            android:layout_height="@dimen/avatar_size"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/margin_top_content"
-            android:layout_marginTop="@dimen/margin_top_content"
-            android:src="@color/gray_800"
-            app:riv_corner_radius="@dimen/avatar_corner_radius" />
-
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/avatar"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="@dimen/margin_top_content"
-            android:layout_toEndOf="@+id/avatar"
-            android:fontFamily="@font/vk_sans_medium"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            tools:text="Street Fighters Crew" />
-
-        <TextView
-            android:id="@+id/time_passed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="@dimen/margin_top_content"
-            android:layout_toEndOf="@+id/avatar"
-            android:alpha="0.8"
-            android:fontFamily="@font/vk_sans_medium"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            tools:text="Три часа назад" />
-
-        <include
-            layout="@layout/social_actions_buttons_row"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/margin_bottom_content" />
-
-
-    </RelativeLayout>
-
-
     <FrameLayout
-        android:id="@+id/left_overlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/overlay_blue">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/attachment_image"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:background="@drawable/overlay_blue">
+
+            <include
+                android:id="@+id/info"
+                layout="@layout/news_info" />
+
+            <TextView
+                android:id="@+id/text"
+                style="@style/NewsTextBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/social_actions"
+                android:layout_marginHorizontal="@dimen/margin_bottom_content"
+                android:layout_marginTop="@dimen/margin_bottom_content"
+                tools:text="Уже завтра состоится соревнование по дрифту в дисциплине «Джимхана»!" />
+
+            <include
+                android:id="@+id/social_actions"
+                layout="@layout/social_actions_buttons_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin_bottom_content" />
 
 
-        <TextView
-            android:layout_width="146dp"
-            android:layout_height="60dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/overlay_message_top_margin"
-            android:layout_marginEnd="@dimen/margin_top_content"
-            android:background="@drawable/shape_primary_12"
-            android:fontFamily="@font/vk_sans_medium"
-            android:padding="12dp"
-            android:text="@string/fewer_entries"
-            android:textColor="@color/blue"
-            android:textSize="15sp" />
+        </RelativeLayout>
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/right_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/overlay_red">
+    <include layout="@layout/news_left_overlay" />
 
-        <TextView
-            android:layout_width="146dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="@dimen/margin_top_content"
-            android:layout_marginTop="@dimen/overlay_message_top_margin"
-            android:background="@drawable/shape_primary_12"
-            android:fontFamily="@font/vk_sans_medium"
-            android:padding="12dp"
-            android:text="@string/more_entries"
-            android:textColor="@color/red"
-            android:textSize="15sp" />
-
-    </FrameLayout>
+    <include layout="@layout/news_right_overlay" />
 
 </androidx.cardview.widget.CardView>

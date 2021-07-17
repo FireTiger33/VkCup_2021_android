@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_top_content"
+    tools:background="@drawable/overlay_red">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        android:layout_alignParentTop="true"
+        android:src="@color/gray_800"
+        app:riv_corner_radius="@dimen/avatar_corner_radius" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/avatar"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="@dimen/margin_top_content"
+        android:layout_toEndOf="@+id/avatar"
+        android:fontFamily="@font/vk_sans_medium"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        tools:text="Street Fighters Crew" />
+
+    <TextView
+        android:id="@+id/time_passed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="@dimen/margin_top_content"
+        android:layout_toEndOf="@+id/avatar"
+        android:alpha="0.8"
+        android:fontFamily="@font/vk_sans_medium"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        tools:text="Три часа назад" />
+
+</RelativeLayout>
