@@ -1,40 +1,100 @@
 package com.stacktivity.vknews.ui
 
 import android.animation.AnimatorInflater
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
 import android.viewbinding.library.fragment.viewBinding
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
 import com.stacktivity.vknews.R
+import com.stacktivity.vknews.adapter.CardStackAdapter
 import com.stacktivity.vknews.databinding.NewsScreenBinding
+import com.stacktivity.vknews.utils.launchWhenStarted
+import com.vk.api.sdk.VK
 import com.yuyakaido.android.cardstackview.*
-import java.util.ArrayList
+import kotlinx.coroutines.flow.onEach
 
 class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
 
     private val mTag: String = NewsFragment::class.java.simpleName
+
     private val manager by lazy { CardStackLayoutManager(requireContext(), this) }
-    private val adapter by lazy { CardStackAdapter(createSpots()) }
+    private val adapter by lazy { CardStackAdapter() }
 
     private val binding: NewsScreenBinding by viewBinding()
 
     private val viewModel: NewsViewModel by lazy {
-        ViewModelProvider(this).get(NewsViewModel::class.java)
+        ViewModelProvider(this, NewsViewModelFactory()).get(NewsViewModel::class.java)
+    }
+
+    private val swipeAnimationDuration = Duration.Normal.duration
+    private val likeAnimationSetting = SwipeAnimationSetting.Builder()
+        .setDirection(Direction.Right)
+        .setDuration(swipeAnimationDuration)
+        .setInterpolator(AccelerateInterpolator())
+        .build()
+    private val dislikeAnimationSetting = SwipeAnimationSetting.Builder()
+        .setDirection(Direction.Left)
+        .setDuration(swipeAnimationDuration)
+        .setInterpolator(AccelerateInterpolator())
+        .build()
+
+    companion object {
+        const val KEY_TEST_MODE = "keyTest"
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val testMode = arguments?.getBoolean(KEY_TEST_MODE, false) ?: false
+
+        viewModel.testMode = testMode
+
+        if (VK.isLoggedIn().not() && testMode.not()) {
+            showLoginScreen()
+        }
+
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupObservers()
+        initUI()
+        viewModel.fetchItems()
+    }
+
+    private fun setupObservers() {
+        setupButtonsListeners()
+
+        viewModel.newsFlow.onEach { news ->
+            Log.d(mTag, "get ${news.size} news, adapter: ${adapter.currentList.size}")
+            adapter.submitList(news)
+            Log.d(mTag, "get ${news.size} news, result: ${adapter.currentList.size}")
+        }.launchWhenStarted(lifecycleScope)
+    }
+
+    private fun initUI() {
         setupToolbar()
-        initialize()
-        setupButton()
+        initNewsView()
+        setupButtonsAnimations()
+    }
+
+    private fun showLoginScreen() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.container, LoginFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setupToolbar() {
@@ -45,7 +105,7 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
         }
     }
 
-    private fun initialize() {
+    private fun initNewsView() {
         val overlayInterpolator = Interpolator { if (it < 0.5) it * 2 else 1f }
 
         manager.apply {
@@ -73,148 +133,80 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupButton() {
+    private fun setupButtonsAnimations() {
+        binding.buttonLike.stateListAnimator = AnimatorInflater.loadStateListAnimator(
+            context,
+            R.animator.action_button_focus_animator
+        )
 
-        binding.buttonLike.stateListAnimator = AnimatorInflater.loadStateListAnimator(context,
-            R.animator.action_button_focus_animator)
+        binding.buttonDislike.stateListAnimator = AnimatorInflater.loadStateListAnimator(
+            context,
+            R.animator.action_button_focus_animator
+        )
+    }
 
-        binding.buttonDislike.stateListAnimator = AnimatorInflater.loadStateListAnimator(context,
-            R.animator.action_button_focus_animator)
+    private fun setupButtonsListeners() {
 
         binding.buttonDislike.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Left)
-                .setDuration(Duration.Normal.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
+            enableButtons(false)
+            onNewsDisliked()
+            manager.setSwipeAnimationSetting(dislikeAnimationSetting)
             binding.cardStackView.swipe()
+            it.postDelayed({
+                enableButtons(true)
+            }, swipeAnimationDuration.toLong())
         }
 
         binding.buttonLike.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Right)
-                .setDuration(Duration.Normal.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
+            enableButtons(false)
+            onNewsLiked()
+            manager.setSwipeAnimationSetting(likeAnimationSetting)
             binding.cardStackView.swipe()
+            it.postDelayed({
+                enableButtons(true)
+            }, swipeAnimationDuration.toLong())
         }
     }
 
-    private fun paginate() {
-        val old = adapter.getSpots()
-        val new = old.plus(createSpots())
-        val callback = NewsItemDiffCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
-        result.dispatchUpdatesTo(adapter)
+    private fun enableButtons(enable: Boolean) {
+        binding.buttonDislike.isEnabled = enable
+        binding.buttonLike.isEnabled = enable
     }
 
-    private fun createSpots(): List<NewsItem> {
-        val spots = ArrayList<NewsItem>()
-        spots.add(
-            NewsItem(
-                name = "Kyoto: Yasaka Shrine",
-                timePassed = "час назад",
-                imageUrl = "https://source.unsplash.com/Xq1ntWruZQI/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "Kyoto: Fushimi Inari Shrine",
-                timePassed = "три часа назад",
-                imageUrl = "https://source.unsplash.com/NYyCqdBOKwc/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "Kyoto: Bamboo Forest",
-                timePassed = "сегодня в 8:30",
-                imageUrl = "https://source.unsplash.com/buF62ewDLcQ/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "New York: Brooklyn Bridge",
-                timePassed = "три часа назад",
-                imageUrl = "https://source.unsplash.com/THozNzxEP3g/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "Empire State Building",
-                timePassed = "год назад",
-                imageUrl = "https://source.unsplash.com/USrZRcRS2Lw/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "The statue of Liberty",
-                timePassed = "месяц назад",
-                imageUrl = "https://source.unsplash.com/PeFk7fzxTdk/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "Louvre Museum",
-                timePassed = "вчера в 18:00",
-                imageUrl = "https://source.unsplash.com/LrMWHKqilUw/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "Paris: Eiffel Tower",
-                timePassed = "вчера в 18:00",
-                imageUrl = "https://source.unsplash.com/HN-5Z6AmxrM/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "London: Big Ben",
-                timePassed = "вчера в 18:00",
-                imageUrl = "https://source.unsplash.com/CdVAUADdqEc/600x800"
-            )
-        )
-        spots.add(
-            NewsItem(
-                name = "China: Great Wall of China",
-                timePassed = "вчера в 18:00",
-                imageUrl = "https://source.unsplash.com/AWh9C-QjhE4/600x800"
-            )
-        )
-        return spots
+    private fun onNewsLiked() {
+        val swipedId = manager.topPosition - 1
+        val item = adapter.currentList[swipedId]
+        viewModel.onNewsLiked(item)
+    }
+
+    private fun onNewsDisliked() {
+        val swipedId = manager.topPosition - 1
+        val item = adapter.currentList[swipedId]
+        viewModel.onNewsDisliked(item)
     }
 
 
-    override fun onCardDragging(direction: Direction, ratio: Float) {
-        if (direction == Direction.Left) {
-            binding.buttonDislike.customSize
-        }
-        Log.d(mTag, "onCardDragging: d = ${direction.name}, r = $ratio")
-    }
+    // CardStackListener
+
+    override fun onCardDragging(direction: Direction, ratio: Float) {}
 
     override fun onCardSwiped(direction: Direction) {
-        Log.d(mTag, "onCardSwiped: p = ${manager.topPosition}, d = $direction")
-        if (manager.topPosition == adapter.itemCount - 5) {
-            paginate()
+        if (direction == Direction.Left) {
+            onNewsDisliked()
+        } else {
+            onNewsLiked()
+        }
+
+        if ( adapter.itemCount - manager.topPosition - 20 < 0) {
+            viewModel.fetchItems()
         }
     }
 
-    override fun onCardRewound() {
-        Log.d(mTag, "onCardRewound: ${manager.topPosition}")
-    }
+    override fun onCardRewound() {}
 
-    override fun onCardCanceled() {
-        Log.d(mTag, "onCardCanceled: ${manager.topPosition}")
-    }
+    override fun onCardCanceled() {}
 
-    override fun onCardAppeared(view: View, position: Int) {
-        Log.d(mTag, "onCardAppeared: ($position)")
-    }
+    override fun onCardAppeared(view: View, position: Int) {}
 
-    override fun onCardDisappeared(view: View, position: Int) {
-        Log.d(mTag, "onCardDisappeared: ($position)")
-    }
+    override fun onCardDisappeared(view: View, position: Int) {}
 }
