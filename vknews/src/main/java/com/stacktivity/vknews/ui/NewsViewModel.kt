@@ -14,19 +14,12 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
     private val _dataLoading = MutableStateFlow(false)
     val dataLoading: StateFlow<Boolean> get() = _dataLoading.asStateFlow()
 
-    var testMode = false
-
     fun fetchItems() {
         viewModelScope.launch {
             if (dataLoading.value) return@launch
 
             _dataLoading.value = true
-
-            if (testMode) {
-                _newsFlow.tryEmit(repository.getTestNews())
-            } else {
-                _newsFlow.tryEmit(repository.fetchNews())
-            }
+            _newsFlow.tryEmit(repository.fetchNews())
             _dataLoading.value = false
         }
     }

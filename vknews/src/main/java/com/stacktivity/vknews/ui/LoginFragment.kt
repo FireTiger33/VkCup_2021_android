@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.Fragment
+import com.stacktivity.core.utils.FragmentManagers.addFragment
+import com.stacktivity.core.utils.FragmentManagers.replaceFragment
 import com.stacktivity.vknews.R.id.container
 import com.stacktivity.vknews.R.layout.login_screen
 import com.stacktivity.vknews.databinding.LoginScreenBinding
@@ -47,9 +49,12 @@ class LoginFragment: Fragment(login_screen) {
         fragment.arguments = Bundle(1).apply {
             putBoolean(NewsFragment.KEY_TEST_MODE, testMode)
         }
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(container, fragment)
-            .addToBackStack(null)
-            .commit()
+        if (testMode) {
+            replaceFragment(requireActivity().supportFragmentManager, fragment, container)
+        } else {
+            requireActivity().supportFragmentManager.popBackStack()
+            replaceFragment(requireActivity().supportFragmentManager, fragment, container)
+        }
+
     }
 }

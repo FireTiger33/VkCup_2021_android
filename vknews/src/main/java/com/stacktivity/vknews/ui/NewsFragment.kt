@@ -13,6 +13,7 @@ import android.view.animation.Interpolator
 import android.viewbinding.library.fragment.viewBinding
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.stacktivity.core.utils.FragmentManagers.replaceFragment
 import com.stacktivity.vknews.R
 import com.stacktivity.vknews.adapter.CardStackAdapter
 import com.stacktivity.vknews.databinding.NewsScreenBinding
@@ -31,8 +32,10 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
     private val binding: NewsScreenBinding by viewBinding()
 
     private val viewModel: NewsViewModel by lazy {
-        ViewModelProvider(this, NewsViewModelFactory()).get(NewsViewModel::class.java)
+        ViewModelProvider(this, NewsViewModelFactory(testMode)).get(NewsViewModel::class.java)
     }
+
+    private var testMode = false
 
     private val swipeAnimationDuration = Duration.Normal.duration
     private val likeAnimationSetting = SwipeAnimationSetting.Builder()
@@ -55,9 +58,7 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val testMode = arguments?.getBoolean(KEY_TEST_MODE, false) ?: false
-
-        viewModel.testMode = testMode
+        testMode = arguments?.getBoolean(KEY_TEST_MODE, false) ?: false
 
         if (VK.isLoggedIn().not() && testMode.not()) {
             showLoginScreen()
@@ -85,24 +86,13 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
     }
 
     private fun initUI() {
-        setupToolbar()
         initNewsView()
         setupButtonsAnimations()
     }
 
     private fun showLoginScreen() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.container, LoginFragment())
-            .addToBackStack(null)
-            .commit()
-    }
-
-    private fun setupToolbar() {
-        requireActivity().setActionBar(binding.toolbar)
-        requireActivity().actionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_toolbar_back)
-        }
+        requireActivity().supportFragmentManager.popBackStack()
+        replaceFragment(requireActivity().supportFragmentManager, LoginFragment(), R.id.container)
     }
 
     private fun initNewsView() {
@@ -165,6 +155,10 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
             it.postDelayed({
                 enableButtons(true)
             }, swipeAnimationDuration.toLong())
+        }
+
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 

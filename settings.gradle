@@ -1,3 +1,4 @@
 rootProject.name = "VkCup2021"
 include ':app', ':cardstackview', 'sample'
 include ':vknews'
+include ':core'

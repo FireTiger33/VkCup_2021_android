@@ -50,12 +50,12 @@ internal object NewsRepositoryImpl : NewsRepository {
                     return
                 }
 
-                var newsfeeds: List<NewsItem> = result.items?.mapIndexed { i, item ->
+                var newsfeeds: List<NewsItem> = result.items?.map { item ->
                     when (item) {
                         is NewsfeedNewsfeedItem.NewsfeedItemWallpost -> {
                             val userInfo =
                                 getUserInfo(item.sourceId, result.profiles, result.groups)
-                            item.mapToNewsItem(userInfo ?: getTestSourceInfo())
+                            item.mapToNewsItem(userInfo ?: MockNewsRepo.getSourceInfo())
                         }
 
                         else -> throw IllegalArgumentException("Unsupported post type: $item")
@@ -78,6 +78,10 @@ internal object NewsRepositoryImpl : NewsRepository {
         return news.toList()
     }
 
+    override fun clearNews() {
+        news.clear()
+    }
+
     /**
      * Remove an [item] from news list
      *
@@ -95,75 +99,6 @@ internal object NewsRepositoryImpl : NewsRepository {
     override fun removeItemAt(pos: Int): List<NewsItem> {
         return news.apply { removeAt(pos) }.toList()
     }
-
-    override fun getTestNews() = news.apply {
-        addAll(
-            arrayListOf(
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "час назад",
-                    imageUrl = "https://source.unsplash.com/Xq1ntWruZQI/600x800",
-                    imageWidth = 600, imageHeight = 800,
-                ),
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "три часа назад",
-                    imageUrl = "https://source.unsplash.com/NYyCqdBOKwc/600x800",
-                    imageWidth = 600, imageHeight = 800,
-                    text = "Kyoto: Fushimi Inari Shrine"
-                ),
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "сегодня в 8:30",
-                    imageUrl = "https://1.bp.blogspot.com/-M5yfX86zJeE/Xclwb6S0IwI/AAAAAAAApUg/" +
-                        "bsf2qwYifPckCQd-Lm5Si12kDOoREyJVQCLcBGAsYHQ/s1600/francisco-negroni-7.jpeg",
-                    imageWidth = 800, imageHeight = 531,
-                    text = "Фотограф когда-то изучал рекламную фотографию и туризм, " +
-                        "но как только впервые стал свидетелем извержения вулкана," +
-                        " понял, что в своей карьере фотографа хочет фокусироваться именно" +
-                        " на этом впечатляющем природном явлении."
-                ),
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "три часа назад",
-                    text = "«В жарких районах типа Персидского залива летом температура в некоторых " +
-                        "его помещениях может доходить до +70 °C." +
-                        " Постоянная возня с механизмами, руки, пропахшие маслом и мазутом." +
-                        " Не такую картину рисуют себе молодые люди, мечтающие о море.\n" +
-                        "А представляют они себя с кружкой кофе в одной руке, с биноклем в другой," +
-                        " придерживающими тяжелый штурвал своей могучей капитанской грудью в белоснежной" +
-                        " рубашке с погонами или в кителе, с капитанской фуражкой на голове..."
-                ),
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "вчера в 18:00",
-                    imageUrl = "https://source.unsplash.com/LrMWHKqilUw/600x800",
-                    imageWidth = 800, imageHeight = 600,
-                    text = "Рекламная фотография"
-                ),
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "месяц назад",
-                    imageUrl = "https://source.unsplash.com/PeFk7fzxTdk/600x800",
-                    imageWidth = 600, imageHeight = 800,
-                ),
-                NewsItem(
-                    sourceInfo = getTestSourceInfo(),
-                    timePassed = "год назад",
-                    imageUrl = "https://source.unsplash.com/USrZRcRS2Lw/600x800",
-                    imageWidth = 600, imageHeight = 800,
-                ),
-            )
-        )
-    }.toList()
-
-    private fun getTestSourceInfo() = NewsItemSourceInfo(
-        "Иван Иванов",
-        "https://sun2.megafon-nn.userapi.com/s/v1/ig2/" +
-            "LHY02W7mmBoRPpvp9jhmB_cCfMF9zqSXWViuVNFFpjrtH2wShqMv" +
-            "RpgwXfnoj8gCQWBrwqNtokrCldcLwGDvw1n3.jpg" +
-            "?size=50x0&quality=96&crop=65,52,281,281&ava=1"
-    )
 
     private fun getUserInfo(
         sourceId: Int?, profiles: List<UsersUserFull>?, groups: List<GroupsGroupFull>?
