@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/ThemeCardLightBackground"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
     <RelativeLayout
@@ -22,17 +23,19 @@
             android:layout_height="188dp"
             android:layout_below="@id/info"
             android:contentDescription="@string/attachment_image"
-            android:scaleType="centerCrop"
+            android:scaleType="matrix"
             tools:src="@drawable/overlay_blue" />
 
         <TextView
             android:id="@+id/text"
             style="@style/NewsTextBold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_above="@id/social_actions"
+            android:layout_below="@id/image"
             android:layout_marginHorizontal="@dimen/margin_bottom_content"
-            android:layout_marginTop="@dimen/margin_bottom_content"
+            android:layout_marginTop="50dp"
+            android:gravity="bottom"
             tools:text="Уже завтра состоится соревнование по дрифту в дисциплине «Джимхана»!" />
 
         <include

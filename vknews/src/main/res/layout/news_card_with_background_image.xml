@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/ThemeCardDarkBackground"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
     <FrameLayout
@@ -17,6 +18,19 @@
             android:contentDescription="@string/attachment_image"
             android:scaleType="centerCrop" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:alpha="0.4"
+            android:background="@drawable/top_background_gradient_black" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:layout_gravity="bottom"
+            android:alpha="0.6"
+            android:background="@drawable/bottom_background_gradient_black" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,7 +38,9 @@
 
             <include
                 android:id="@+id/info"
-                layout="@layout/news_info" />
+                layout="@layout/news_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text"
@@ -32,8 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/social_actions"
+                android:layout_below="@id/info"
                 android:layout_marginHorizontal="@dimen/margin_bottom_content"
                 android:layout_marginTop="@dimen/margin_bottom_content"
+                android:gravity="bottom"
                 tools:text="Уже завтра состоится соревнование по дрифту в дисциплине «Джимхана»!" />
 
             <include
@@ -43,7 +61,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="@dimen/margin_bottom_content" />
-
 
         </RelativeLayout>
 
