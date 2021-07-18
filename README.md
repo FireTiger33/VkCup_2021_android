@@ -21,6 +21,7 @@ Implementation of the application using the [VK SDK for Android](https://github.
     * [Glide for Jetpack Compose](https://google.github.io/accompanist/glide/)
 * View
     * [Material Components For Android](https://mvnrepository.com/artifact/com.google.android.material/material)
+    * [CardStackView](https://github.com/yuyakaido/CardStackView)
     * [RoundedImageView](https://github.com/vinc3m1/RoundedImageView)
     * [Prettytime](https://github.com/ocpsoft/prettytime)
 * Other
