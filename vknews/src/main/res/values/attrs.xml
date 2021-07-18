@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="social_actions_buttons_color" format="color" />
+    <attr name="number_of_social_actions_color" format="color" />
+    <attr name="content_info_color" format="color" />
+    <attr name="content_text_color" format="color" />
+    <attr name="username_color" format="color" />
+</resources>

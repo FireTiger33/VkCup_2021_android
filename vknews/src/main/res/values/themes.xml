@@ -1,16 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.VkCup2021" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue</item>
-        <item name="colorSecondaryVariant">@color/red</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+<resources>
+
+    <style name="ThemeCardLightBackground" parent="Theme.MaterialComponents.Light">
+        <item name="social_actions_buttons_color">#99A2AD</item>
+        <item name="number_of_social_actions_color">#99A2AD</item>
+        <item name="content_info_color">#CC818C99</item>
+        <item name="content_text_color">#000000</item>
+        <item name="username_color">#000000</item>
     </style>
+
+    <style name="ThemeCardDarkBackground" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="social_actions_buttons_color">#66FFFFFF</item>
+        <item name="number_of_social_actions_color">#66FFFFFF</item>
+        <item name="content_info_color">#CCFFFFFF</item>
+        <item name="content_text_color">#FFFFFF</item>
+        <item name="username_color">#FFFFFF</item>
+    </style>
+
 </resources>
