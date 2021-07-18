@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">VkCup2021</string>
     <string name="like">like</string>
+    <string name="taxi">Такси</string>
+    <string name="news">Новости с карточками</string>
+    <string name="video_editor">Видеоредактор</string>
+    <string name="tic_tac_toe">Крестики-нолики</string>
+    <string name="voice_editor">Обработка голоса</string>
 </resources>

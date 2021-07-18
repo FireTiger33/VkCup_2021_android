@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_taxi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_bottom_content"
+        android:layout_marginVertical="@dimen/margin_list_content"
+        android:background="@drawable/shape_blue_pressed"
+        android:enabled="false"
+        android:text="@string/taxi"
+        android:theme="@android:style/Widget.Button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_vk_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_bottom_content"
+        android:layout_marginVertical="@dimen/margin_list_content"
+        android:background="@drawable/shape_blue_pressed"
+        android:text="@string/news"
+        android:theme="@android:style/Widget.Button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_tic_tac_toe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_bottom_content"
+        android:layout_marginVertical="@dimen/margin_list_content"
+        android:background="@drawable/shape_blue_pressed"
+        android:enabled="false"
+        android:text="@string/video_editor"
+        android:theme="@android:style/Widget.Button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_bottom_content"
+        android:layout_marginVertical="@dimen/margin_list_content"
+        android:background="@drawable/shape_blue_pressed"
+        android:enabled="false"
+        android:text="@string/tic_tac_toe"
+        android:theme="@android:style/Widget.Button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_voice_editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_bottom_content"
+        android:layout_marginVertical="@dimen/margin_list_content"
+        android:background="@drawable/shape_blue_pressed"
+        android:enabled="false"
+        android:text="@string/voice_editor"
+        android:theme="@android:style/Widget.Button" />
+</LinearLayout>

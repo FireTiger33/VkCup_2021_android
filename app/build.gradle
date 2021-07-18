@@ -35,6 +35,7 @@ repositories {
 
 dependencies {
 
+    implementation project(':core')
     implementation project(':vknews')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
