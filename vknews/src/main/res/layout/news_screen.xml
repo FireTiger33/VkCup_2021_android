@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@null"
+            android:drawableStart="@drawable/ic_toolbar_back" />
+
+        <TextView
+            style="@style/ToolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="?android:attr/actionBarSize"
+            android:gravity="center"
+            android:text="@string/title" />
+    </android.widget.Toolbar>
+
+
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/card_stack_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.55"
+        android:clipToPadding="false"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="36dp"
+        tools:listitem="@layout/news_card_with_background_image" />
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_dislike"
+            android:layout_width="@dimen/action_button_size"
+            android:layout_height="@dimen/action_button_size"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/dislike_background_color_state"
+            android:contentDescription="@string/dislike"
+            android:src="@drawable/ic_dislike"
+            app:fabCustomSize="@dimen/action_button_size"
+            app:maxImageSize="@dimen/action_button_icon_size"
+            app:rippleColor="@null"
+            app:tint="@color/dislike_tint_color_state"
+            tools:tint="@null" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_like"
+            android:layout_width="@dimen/action_button_size"
+            android:layout_height="@dimen/action_button_size"
+            android:layout_marginStart="74dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/like_background_color_state"
+            android:contentDescription="@string/like"
+            android:src="@drawable/ic_like"
+            app:fabCustomSize="@dimen/action_button_size"
+            app:maxImageSize="@dimen/action_button_icon_size"
+            app:rippleColor="@null"
+            app:tint="@color/like_tint_color_state"
+            tools:tint="@null" />
+
+    </LinearLayout>
+
+</LinearLayout>

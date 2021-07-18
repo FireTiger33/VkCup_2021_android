@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/left_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/overlay_blue">
+
+    <TextView
+        style="@style/OverlayMessage"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/overlay_message_top_margin"
+        android:layout_marginEnd="@dimen/margin_top_content"
+        android:text="@string/fewer_entries"
+        android:textColor="@color/blue" />
+
+</FrameLayout>

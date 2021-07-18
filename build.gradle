@@ -20,3 +20,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    coroutine_version = '1.5.0'
+    lifecycle_version = '2.3.1'
+    material_version = '1.4.0'
+    appcompat_version = '1.3.0'
+    viewBinding_delegate_version = '1.0.3'
+}

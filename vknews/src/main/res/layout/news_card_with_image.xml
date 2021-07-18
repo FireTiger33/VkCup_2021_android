@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/ThemeCardLightBackground"
+    app:cardCornerRadius="@dimen/card_corner_radius">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/info"
+            layout="@layout/news_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
+            android:layout_below="@id/info"
+            android:contentDescription="@string/attachment_image"
+            android:scaleType="matrix"
+            tools:src="@drawable/overlay_blue" />
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/NewsTextBold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@id/social_actions"
+            android:layout_below="@id/image"
+            android:layout_marginHorizontal="@dimen/margin_bottom_content"
+            android:layout_marginTop="50dp"
+            android:gravity="bottom"
+            tools:text="Уже завтра состоится соревнование по дрифту в дисциплине «Джимхана»!" />
+
+        <include
+            android:id="@+id/social_actions"
+            layout="@layout/social_actions_buttons_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_bottom_content" />
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/news_left_overlay" />
+
+    <include layout="@layout/news_right_overlay" />
+
+</androidx.cardview.widget.CardView>

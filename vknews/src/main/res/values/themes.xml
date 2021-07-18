@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="ThemeCardLightBackground" parent="Theme.MaterialComponents.Light">
+        <item name="social_actions_buttons_color">#99A2AD</item>
+        <item name="number_of_social_actions_color">#99A2AD</item>
+        <item name="content_info_color">#CC818C99</item>
+        <item name="content_text_color">#000000</item>
+        <item name="username_color">#000000</item>
+    </style>
+
+    <style name="ThemeCardDarkBackground" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="social_actions_buttons_color">#66FFFFFF</item>
+        <item name="number_of_social_actions_color">#66FFFFFF</item>
+        <item name="content_info_color">#CCFFFFFF</item>
+        <item name="content_text_color">#FFFFFF</item>
+        <item name="username_color">#FFFFFF</item>
+    </style>
+
+</resources>

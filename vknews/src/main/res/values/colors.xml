@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_800">#424242</color>
+    <color name="red">#FF3347</color>
+    <color name="red_alpha_20">#33FF3347</color>
+    <color name="blue">#3F8AE0</color>
+    <color name="blue_dark">#267ADC</color>
+    <color name="blue_alpha_20">#333F8AE0</color>
+
+    <color name="card_text_background_color">#63B9BA</color>
+</resources>
