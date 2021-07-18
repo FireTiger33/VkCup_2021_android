@@ -1,4 +1,5 @@
-# VkCup_2021_android
+# VkCup_2021_android 
+[Tasks](https://vk.com/@vkteam-vk-cup-2021-mobile-elimination-17249)
 
 Implementation of the application using the [VK SDK for Android](https://github.com/VKCOM/vk-android-sdk).
 
