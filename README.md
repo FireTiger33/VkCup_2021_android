@@ -18,7 +18,7 @@ Implementation of the application using the [VK SDK for Android](https://github.
 ### Libraries
 
 * Accompanist
-    * [Glide for Jetpack Compose](https://google.github.io/accompanist/glide/)
+    * [Glide](https://github.com/bumptech/glide) for loading images
 * View
     * [Material Components For Android](https://mvnrepository.com/artifact/com.google.android.material/material)
     * [CardStackView](https://github.com/yuyakaido/CardStackView)
