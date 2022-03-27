@@ -139,7 +139,6 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
 
         binding.buttonDislike.setOnClickListener {
             enableButtons(false)
-            onNewsDisliked()
             manager.setSwipeAnimationSetting(dislikeAnimationSetting)
             binding.cardStackView.swipe()
             it.postDelayed({
@@ -149,7 +148,6 @@ class NewsFragment : Fragment(R.layout.news_screen), CardStackListener {
 
         binding.buttonLike.setOnClickListener {
             enableButtons(false)
-            onNewsLiked()
             manager.setSwipeAnimationSetting(likeAnimationSetting)
             binding.cardStackView.swipe()
             it.postDelayed({
